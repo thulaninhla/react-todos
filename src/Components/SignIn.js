@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import "./App.css";
 import "./mystyles.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Form, Alert, Button, Row, Col } from "react-bootstrap";
+import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
 
 const SignIn = () => {
 
@@ -35,7 +35,9 @@ const SignIn = () => {
 
   return (
     
-    <>
+    <div>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <div className="w-100" style={{ maxWidth: '900px' }}>
 <section className="login" py-5 bg-light>
   <div className="container" >
     <div className="row" g-0 >
@@ -79,7 +81,9 @@ const SignIn = () => {
   </div>   
   
 </section>
-</>
+</div>
+</Container>
+</div>
 
   );
 };
