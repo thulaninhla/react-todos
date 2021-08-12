@@ -1,0 +1,29 @@
+.app {
+  padding: 30px;
+  background-color: floralwhite;
+}
+
+.todo {
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  justify-content: space-between;
+}
+img {
+  display: block;
+  position: absolute;
+  
+}
+.wrapper {
+  position: absolute;
+  left: -10%;
+  mix-blend-mode: multiply;
+}
+.screen {
+  width: 1628px;
+  height: 1058px;
+  mix-blend-mode: multiply;
+  background-color: #ffffff;
+  overflow: hidden;
+  border-radius: 30px;
+}
