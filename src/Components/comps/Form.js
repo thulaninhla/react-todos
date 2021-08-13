@@ -3,118 +3,84 @@ import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from 'react';
 import firebase from "firebase/app";
-import "firebase/firestore"
+import "firebase/firestore";
+import { Todos } from '../Todos';
 
 
-const Form = ({ input, setInput, todos, setTodos }) => {
-
-  const [Datalist,setData]=useState([{activity:''}])
-
-  const onCreate = () =>{
-    const db =firebase.firestore()
-    db.collection("users").add({activity:input})
+export const Form = ({currentUser, todos, deleteTodo,
+  editTodoValue, editModal, updateTodoHandler}) => {
+  
+    const [todo, setTodo]=useState('');
+    const [todoError, setTodoError]=useState('');
+  
+    const handleTodoSubmit=(e)=>{
+      e.preventDefault();
+      auth.onAuthStateChanged(user=>{
+        if(user){
+          db.collection('todos of ' + user.uid).add({
+            Todo: todo
+          }).then(setTodo('')).catch(err=>setTodoError(err.message))
+        }
+        else{
+          console.log('user is not signed in to add todo to database');
+        }
+      })
+    }
+  
+      return (
+          <div className='wrapper'>
+            <Todos currentUser={currentUser}/>
+            <br></br>
+            <br></br>
+            <div className='container'>
+              <form autoComplete='off' className='form-group'
+              onSubmit={handleTodoSubmit}>
+  
+              {currentUser&&<>
+                <input type="text" placeholder="Enter TODO's"
+                  className='form-control' required
+                  onChange={(e)=>setTodo(e.target.value)}
+                  value={todo}
+                />
+                <br></br>
+                <div style={{width: 100+'%',
+                display: 'flex',justifyContent: 'flex-end'}}>
+                  <button type="submit" className='btn btn-success'
+                    style={{width: 100+'%'}}>
+                     ADD
+                  </button>
+                </div>
+                
+              </>}
+  
+              {!currentUser&&<>
+                <input type="text" placeholder="Enter TODO's"
+                  className='form-control' required disabled
+                />
+                <br></br>
+                <div style={{width: 100+'%',
+                display: 'flex',justifyContent: 'flex-end'}}>
+                  <button type="submit" className='btn btn-success'
+                  disabled style={{width: 100+'%'}}>
+                     ADD
+                  </button>
+                </div>
+                <div className='error-msg'>
+                  Please register your account or login to use application
+                </div>
+              </>}
+              
+              </form>
+              {todoError&&<div className='error-msg'>{todoError}</div>}
+              <Todos todos={todos} deleteTodo={deleteTodo}
+               editModal={editModal}/>
+              </div>
+  
+              {editTodoValue&&<Modal editTodoValue={editTodoValue}
+                editModal={editModal} updateTodoHandler={updateTodoHandler}
+              />} 
+                
+          </div>
+      )
   }
-  
-
-  const onInputChange = event => {
-    setInput(event.target.value);
-  };
-  const onFormSubmit = event => {
-    event.preventDefault();
-    setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
-    setInput('');
-  };
-
-  return (
-    <div className="todo">
-      <form onSubmit={onFormSubmit}>
-        <input
-          style={{
-            marginBottom: '10px',
-            borderStyle: 'none',
-            borderRadius: '0px',
-            textAlign: 'center',
-            marginLeft: '150px',
-            marginTop: '50px',
-            width: '300px',
-            height: '40px',
-            padding:'15px',
-          }}
-          type="text"
-          placeholder="Type something......"
-          className="task-input"
-          value={input}
-          required
-          onChange={onInputChange}
-        />
-
-        <button
-          style={{
-            backgroundColor: '#00e676',
-            height: '40px',
-            width: '80px',
-            color: 'white',
-            borderStyle: 'none',
-            padding:"9px"
-          }}
-          className="button-add"
-          type="submit"
-          onClick={onCreate}
-
-        >
-          Add
-        </button>
-
-      </form>
-      
-      <button style={{
-            backgroundColor: 'rgba(3 , 3 , 3 , 0.2)',
-            height: '30px',
-            width: '80px',
-            color: 'white',
-            borderStyle: 'none',
-            padding:"0px",
-            marginLeft:'285px '
-          }} onClick={()=>{ 
-  let val=[]
-  console.log("getting")
-  console.log(Datalist)
-  firebase.firestore().collection('users').get().then(response=>{
-  console.log(response)
-  response.forEach(data=>{
-       
-  
-    
-    val.push({...{id:data.id},...data.data()})
-     console.log(data.id);
-   
-     //setData(...Datalist,val)
-
-     
-
-   })
-setData(val)
-   //console.log("list = ",val)
-   console.log("list = ",Datalist)
-
-})
-}}>View  </button>
-  <div className = "App" >
-  <ul  style={{listStyle:"none",  marginTop: '1px', background:"rgba(0 , 0 , 0 , 0.5)" ,width:"550px",marginLeft:'50px ' }  } >
-  {Datalist.map(person => {
-    return (
-      <div style={{  marginTop: '20px',color:"#FFFFFF"}} key={person.id} onClick={(data)=>{
-        console.log("click",person)
-
-      }}>
-        {person.activity} 
-      </div>
-    )
-  })}
-</ul>
-     </div>
-    </div>
-  );
-};
-
 export default Form;
