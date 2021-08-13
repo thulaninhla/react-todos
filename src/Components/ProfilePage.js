@@ -19,8 +19,8 @@ import{v4 as uuidv4} from "uuid";
 import React,{useState} from "react";
 import "./mystyles.css";
 import "./style.css"
-import Form from './comps/Form';
-import TodoList from './comps/TodoList';
+import Form from './MyForm';
+//import TodoList from './comps/TodoList';
 import DateTime from './DateTime';
 import { Button, Card, Form, Container, Row, Col} from 'react-bootstrap';
 import  ReactCalendar from './ReactCalendar';
@@ -111,8 +111,7 @@ todos={todos}
 setTodos={setTodos}
 />
 <h5 style={{color:"#e65100", textAlign:"left"}}></h5>
-<TodoList todos={todos}
-setTodos={setTodos} />
+
 </Paper>
 </Grid>
     <Grid className="firstinGrid " item xs={2} >
