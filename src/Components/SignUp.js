@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "@reach/router";
 import { auth, signInWithGoogle, generateUserDocument } from "../firebase";
+import { Form, Alert, Button, Row, Col, Container } from "react-bootstrap";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -36,81 +37,69 @@ const SignUp = () => {
   };
 
   return (
-    <div className="mt-8">
-      <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
-      <div className="border border-blue-400 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
-        {error !== null && (
-          <div className="py-4 bg-red-600 w-full text-white text-center mb-3">
-            {error}
-          </div>
-        )}
-        <form className="">
-          <label htmlFor="displayName" className="block">
-            Display Name:
-          </label>
-          <input
+    
+<>
+<Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <div className="w-100" style={{ maxWidth: '900px' }}>
+<section className="login" py-5 bg-light>
+  <div className="container" >
+    <div className="row" g-0 >
+      <div className="col-lg-5" style={{ backgroundImage: " url('https://scontent.fjnb1-1.fna.fbcdn.net/v/t1.6435-9/p180x540/221416672_4359414714115016_4589805908274039668_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeG_K15tqUvmV-6HEmkzTHM2QLOPcot1b9xAs49yi3Vv3Cy1D_AWTw0i9-5kE8jUzkV1kHA4yoULySMtqKoaflft&_nc_ohc=rjJzr0uQBhIAX8Ycxzm&_nc_ht=scontent.fjnb1-1.fna&oh=30c6be4f617be0ea4b2dccb14557d34a&oe=61308AFE')", borderTopLeftRadius: "30px", borderBottomLeftRadius: "30px" }} >
+      
+      </div>
+          <div className="col-lg-7 text-center py-5">
+            <h1>Sign Up</h1>
+            {error && <Alert variant="danger">{error}</Alert>}
+            
+            <form >
+             <div className="form-row py-3 pt-2" >
+                <div className="offset-1 col-lg-10">
+            <input
             type="text"
-            className="my-1 p-1 w-full "
+            className=" inp px-3"
             name="displayName"
             value={displayName}
-            placeholder="E.g: Faruq"
+            placeholder="Your Name"
             id="displayName"
             onChange={event => onChangeHandler(event)}
           />
-          <label htmlFor="userEmail" className="block">
-            Email:
-          </label>
-          <input
-            type="email"
-            className="my-1 p-1 w-full"
-            name="userEmail"
-            value={email}
-            placeholder="E.g: faruq123@gmail.com"
-            id="userEmail"
-            onChange={event => onChangeHandler(event)}
-          />
-          <label htmlFor="userPassword" className="block">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="mt-1 mb-3 p-1 w-full"
-            name="userPassword"
-            value={password}
-            placeholder="Your Password"
-            id="userPassword"
-            onChange={event => onChangeHandler(event)}
-          />
-          <button
-            className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
-            onClick={event => {
+              </div>
+              </div>
+              <div className="form-row " >
+                <div className="offset-1 col-lg-10">
+                  <input type="email" id="userEmail" name="userEmail" value={email} className="inp px-3" placeholder="Your Email" onChange={event => onChangeHandler (event)} required/>
+              </div>
+                </div>
+                <div className="form-row py-2 pt-3">
+                <div className="offset-1 col-lg-10">
+                <input type="password" id="password" name="userPassword" value={password} className="inp px-3"
+                 placeholder="Your Password" onChange={event => onChangeHandler (event)} required />
+              </div>
+                </div>
+          
+                <div className="form-row py-3">
+                <div className="offset-1 col-lg-10">
+                  <button className="btn1" type="submit" onClick={event => {
               createUserWithEmailAndPasswordHandler(event, email, password);
-            }}
-          >
-            Sign up
-          </button>
-        </form>
-        <p className="text-center my-3">or</p>
-        <button
-          onClick={() => {
-            try {
-              signInWithGoogle();
-            } catch (error) {
-              console.error("Error signing in with Google", error);
-            }
-          }}
-          className="bg-red-500 hover:bg-red-600 w-full py-2 text-white"
-        >
-          Sign In with Google
-        </button>
-        <p className="text-center my-3">
-          Already have an account?{" "}
-          <Link to="/" className="text-blue-500 hover:text-blue-600">
-            Sign in here
-          </Link>{" "}
-        </p>
+            }}>Sign Up</button>
+              </div>
+                </div>
+        
+        <div className="w-100 text-center mt-2">
+      Already have an accout? <Link to="/">Sign In</Link>
+      </div>   
+            </form>    
+           
+            </div>
       </div>
-    </div>
+  </div>   
+  
+</section>
+</div>
+</Container>
+</>
+
+    
   );
 };
 
