@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import { Button, Card, Form, Container, Row, Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useAuth } from './AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import "./style.css";
 import 'firebase/auth';
@@ -95,7 +94,6 @@ function App() {
   };
 
   const [error, setError] = useState('');
-  const { currentUser, logout } = useAuth();
   const history = useHistory();
 
 
@@ -113,9 +111,6 @@ function App() {
   return (
     <>
       <h3 className="text-left mb-4" style={{ margin:'15px' }}>To-Do-List</h3>
-          <Button variant="link" onClick={handleLogout}>
-          Sign Out
-        </Button>
       
         <FormTodo addTodo={addTodo} />
         <div>
